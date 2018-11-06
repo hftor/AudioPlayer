@@ -34,6 +34,7 @@ dependencies {
     implementation 'com.mtechviral.mplaylib:mplaylib:1.0.0'
     implementation "org.jetbrains.anko:anko:0.10.4"
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:0.21.2'
+    compile 'com.android.support:support-annotations:27.1.1'
 }
 kotlin{
     experimental{
