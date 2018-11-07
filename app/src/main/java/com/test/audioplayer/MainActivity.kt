@@ -8,6 +8,8 @@ import android.media.MediaPlayer
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.ActivityCompat
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
@@ -154,8 +156,8 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-            playerUI.setContentView(this@MainActivity)
-            playerUI.playRandom()
+            //playerUI.setContentView(this@MainActivity)
+            //playerUI.playRandom()
         }
     }
 
