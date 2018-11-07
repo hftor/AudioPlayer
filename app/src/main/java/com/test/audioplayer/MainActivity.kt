@@ -81,7 +81,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         launch(kotlinx.coroutines.experimental.android.UI) {
-            val songs = songJob.await()
+            val songs: MutableList<MusicFinder.Song> = songJob.await()
 
             val playerUI = object:AnkoComponent<MainActivity>
             {
