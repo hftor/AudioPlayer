@@ -61,10 +61,6 @@ class PlayerActivity : AppCompatActivity() {
         })
     }
 
-    private suspend fun getFiles(){
-
-    }
-
     fun playRandom(){
 
         mediaPlayer?.reset()
@@ -72,12 +68,11 @@ class PlayerActivity : AppCompatActivity() {
         mediaPlayer?.setOnCompletionListener {
             playRandom()
         }
-        //albumArt?.imageURI = song.albumArt
+
+        songArtist.text = song.artist
         songTitle?.text = song.title
         imageView.imageURI = song.albumArt
-        //songArtist?.text = song.artist
-        //mediaPlayer?.start()
-        //playButton?.imageResource = R.drawable.ic_play_circle_outline_black_24dp
+        mediaPlayer?.start()
     }
 
     fun playOrPause(){
