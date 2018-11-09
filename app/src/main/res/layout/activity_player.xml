@@ -71,12 +71,6 @@
         android:weightSum="5"
         android:gravity="center">
 
-        <!--<TextView-->
-            <!--android:id="@+id/TextView01"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="1"-->
-            <!--android:text="111" />-->
         <ImageButton
             android:id="@+id/imageButton"
             android:layout_width="70dp"
@@ -118,23 +112,4 @@
             tools:layout_editor_absoluteY="143dp" />
     </TableRow>
 
-
-    <!--<GridView-->
-        <!--android:id="@+id/audioPlayerButtonGrid"-->
-        <!--android:layout_width="385dp"-->
-        <!--android:layout_height="111dp"-->
-        <!--app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--app:layout_constraintEnd_toEndOf="parent"-->
-        <!--app:layout_constraintHeight_percent="0.55"-->
-        <!--app:layout_constraintHorizontal_bias="0.0"-->
-        <!--app:layout_constraintStart_toStartOf="parent"-->
-        <!--app:layout_constraintTop_toTopOf="parent"-->
-        <!--app:layout_constraintVertical_bias="0.957"-->
-        <!--android:columnWidth="100dp"-->
-        <!--android:numColumns="3"-->
-        <!--android:gravity="center">-->
-        <!--<ImageButton-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent" />-->
-    <!--</GridView>-->
 </android.support.constraint.ConstraintLayout>
