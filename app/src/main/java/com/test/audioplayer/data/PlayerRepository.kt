@@ -1,5 +1,6 @@
 package com.test.audioplayer.data
 
+import android.app.Activity
 import java.io.File
 import java.nio.file.Files
 
@@ -11,6 +12,14 @@ class PlayerRepository private constructor(private val playerDao: PlayerDAO) {
     fun populateFiles(files : List<File>)
     {
         playerDao.populateFiles(files)
+    }
+
+    fun saveCurrentSong(activity: Activity, key: String, value: String){
+        playerDao.saveCurrentSong(activity, key, value)
+    }
+
+    fun saveSongPosition(activity: Activity, key: String, value: Int){
+        playerDao.saveSongPosition(activity, key, value)
     }
 
     fun getFiles() = playerDao.getFiles()

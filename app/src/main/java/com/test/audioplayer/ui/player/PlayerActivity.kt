@@ -5,17 +5,14 @@ import android.arch.lifecycle.ViewModelProviders
 import android.media.MediaPlayer
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import com.mtechviral.mplaylib.MusicFinder
 import com.test.audioplayer.R
+import com.test.audioplayer.data.PlayerRepository
 import com.test.audioplayer.utilities.InjectorUtils
 import kotlinx.android.synthetic.main.activity_player.*
-import kotlinx.coroutines.experimental.runBlocking
 import org.jetbrains.anko.ctx
-import org.jetbrains.anko.image
 import org.jetbrains.anko.imageResource
 import org.jetbrains.anko.imageURI
-import java.util.*
 
 
 class PlayerActivity : AppCompatActivity() {
