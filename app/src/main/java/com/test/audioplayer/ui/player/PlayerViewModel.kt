@@ -2,9 +2,13 @@ package com.test.audioplayer.ui.player
 
 import android.app.Activity
 import android.arch.lifecycle.ViewModel
+import android.content.Context
 import android.media.MediaPlayer
 import com.mtechviral.mplaylib.MusicFinder
 import com.test.audioplayer.data.PlayerRepository
+import kotlinx.android.synthetic.main.activity_player.*
+import org.jetbrains.anko.ctx
+import org.jetbrains.anko.imageURI
 import java.io.File
 
 /**
@@ -42,5 +46,15 @@ class PlayerViewModel(private val playerRepository: PlayerRepository) : ViewMode
     {
         var currPos = mediaPlayer?.currentPosition
         return if(currPos == null) 0 else currPos
+    }
+
+    fun play(activity: Activity, ctx: Context, newSong: Boolean = false){
+        if(newSong){
+            mediaPlayer?.reset()
+            mediaPlayer = MediaPlayer.create(ctx, song.uri)
+        }
+
+        mediaPlayer?.start()
+        saveCurrentSong(activity, song.title)
     }
 }

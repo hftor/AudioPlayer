@@ -101,16 +101,11 @@ class PlayerActivity : AppCompatActivity() {
                 .get(PlayerViewModel::class.java)
     }
 
-    fun play(newSong: Boolean = false){
-        if(newSong){
-            vm.mediaPlayer?.reset()
-            vm.mediaPlayer = MediaPlayer.create(ctx,vm.song.uri)
-        }
+    private fun play(newSong: Boolean = false){
         songArtist.text = vm.song.artist
         songTitle?.text = vm.song.title
         imageView.imageURI = vm.song.albumArt
-        vm.mediaPlayer?.start()
-        vm.saveCurrentSong(this, vm.song.title)
+        vm.play(this, ctx, newSong)
     }
 
     fun pause(){
