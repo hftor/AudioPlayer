@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.media.MediaPlayer
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import com.mtechviral.mplaylib.MusicFinder
 import com.test.audioplayer.R
 import com.test.audioplayer.utilities.InjectorUtils
@@ -18,6 +19,8 @@ import java.util.*
 
 class PlayerActivity : AppCompatActivity() {
 
+    protected var songCurrentIndex : Int = 0
+    protected var songMaxIndex : Int = 0
     protected lateinit var song : MusicFinder.Song
     protected lateinit var songs : MutableList<MusicFinder.Song>
     var mediaPlayer: MediaPlayer? = null
@@ -34,17 +37,51 @@ class PlayerActivity : AppCompatActivity() {
             }
 
             songs = songJob.await()
-            if(songs == null || !songs.any()){
-                songTitle.text = "No songs :("
-            }
-            else{
-                song = songs[0]
+            initializePlayer()
+
+            previousButton.setOnClickListener({
+                playPrevious()
+            })
+
+            playButton.setOnClickListener {
+                play()
             }
 
-            playFirst()
+            nextButton.setOnClickListener({
+                playNext()
+            })
+
+
         }
 
         initializeUi()
+    }
+
+    private fun initializePlayer(){
+        if(!songs.any()){
+            songTitle.text = "No songs :("
+            return
+        }
+        song = songs[0]
+        songMaxIndex = songs.count() - 1
+    }
+
+    private fun playNext(){
+        if(songCurrentIndex >= songMaxIndex){
+            return
+        }
+
+        song = songs[++songCurrentIndex]
+        play()
+    }
+
+    private fun playPrevious(){
+        if(songCurrentIndex <= 0){
+            return
+        }
+
+        song = songs[--songCurrentIndex]
+        play()
     }
 
     private fun initializeUi(){
@@ -61,12 +98,12 @@ class PlayerActivity : AppCompatActivity() {
         })
     }
 
-    fun playFirst(){
+    fun play(){
 
         mediaPlayer?.reset()
         mediaPlayer = MediaPlayer.create(ctx,song.uri)
         mediaPlayer?.setOnCompletionListener {
-            playFirst()
+            play()
         }
 
         songArtist.text = song.artist

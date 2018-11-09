@@ -59,6 +59,7 @@
         app:layout_constraintVertical_bias="0.581" />
 
     <TableRow
+        android:id="@+id/buttonRow"
         android:layout_width="368dp"
         android:layout_height="125dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -72,7 +73,7 @@
         android:gravity="center">
 
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/previousButton"
             android:layout_width="70dp"
             android:layout_height="61dp"
             app:srcCompat="@drawable/ic_skip_previous_black_24dp"
@@ -88,7 +89,7 @@
             tools:layout_editor_absoluteY="143dp" />
 
         <ImageButton
-            android:id="@+id/imageButton3"
+            android:id="@+id/playButton"
             android:layout_width="70dp"
             android:layout_height="61dp"
             app:srcCompat="@drawable/ic_play_circle_outline_black_24dp"
@@ -104,7 +105,7 @@
             tools:layout_editor_absoluteY="143dp" />
 
         <ImageButton
-            android:id="@+id/imageButton5"
+            android:id="@+id/nextButton"
             android:layout_width="70dp"
             android:layout_height="61dp"
             app:srcCompat="@drawable/ic_skip_next_black_24dp"
