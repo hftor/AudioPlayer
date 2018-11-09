@@ -6,9 +6,6 @@ import android.content.Context
 import android.media.MediaPlayer
 import com.mtechviral.mplaylib.MusicFinder
 import com.test.audioplayer.data.PlayerRepository
-import kotlinx.android.synthetic.main.activity_player.*
-import org.jetbrains.anko.ctx
-import org.jetbrains.anko.imageURI
 import java.io.File
 
 /**
@@ -56,5 +53,17 @@ class PlayerViewModel(private val playerRepository: PlayerRepository) : ViewMode
 
         mediaPlayer?.start()
         saveCurrentSong(activity, song.title)
+    }
+
+    fun pause(){
+        mediaPlayer?.pause()
+    }
+
+    fun fastForward(){
+        mediaPlayer?.seekTo(getSongCurrentPosition() + 10000)
+    }
+
+    fun rewind(){
+        mediaPlayer?.seekTo(getSongCurrentPosition() - 10000)
     }
 }

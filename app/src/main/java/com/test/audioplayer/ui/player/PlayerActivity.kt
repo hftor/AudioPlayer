@@ -70,20 +70,11 @@ class PlayerActivity : AppCompatActivity() {
 
 
     private fun rewind(){
-        vm.mediaPlayer?.seekTo(vm.getSongCurrentPosition() - 10000)
-    }
-
-    private fun playNext(){
-        if(vm.songCurrentIndex >= vm.songMaxIndex){
-            return
-        }
-
-        vm.song = vm.songs[++vm.songCurrentIndex]
-        play(true)
+        vm.rewind()
     }
 
     private fun fastForward(){
-        vm.mediaPlayer?.seekTo(vm.getSongCurrentPosition() + 10000)
+        vm.fastForward()
     }
 
     private fun playPrevious(){
@@ -95,10 +86,17 @@ class PlayerActivity : AppCompatActivity() {
         play(true)
     }
 
-    private fun initializeViewModel(){
-        val factory = InjectorUtils.providePlayerViewModelFactory()
-        vm = ViewModelProviders.of(this, factory)
-                .get(PlayerViewModel::class.java)
+    private fun playNext(){
+        if(vm.songCurrentIndex >= vm.songMaxIndex){
+            return
+        }
+
+        vm.song = vm.songs[++vm.songCurrentIndex]
+        play(true)
+    }
+
+    private fun pause(){
+        vm.pause()
     }
 
     private fun play(newSong: Boolean = false){
@@ -106,10 +104,6 @@ class PlayerActivity : AppCompatActivity() {
         songTitle?.text = vm.song.title
         imageView.imageURI = vm.song.albumArt
         vm.play(this, ctx, newSong)
-    }
-
-    fun pause(){
-        vm.mediaPlayer?.pause()
     }
 
     fun playOrPause(){
@@ -123,5 +117,11 @@ class PlayerActivity : AppCompatActivity() {
             play()
             playOrPauseButton?.imageResource = R.drawable.ic_pause_circle_outline_black_24dp
         }
+    }
+
+    private fun initializeViewModel(){
+        val factory = InjectorUtils.providePlayerViewModelFactory()
+        vm = ViewModelProviders.of(this, factory)
+                .get(PlayerViewModel::class.java)
     }
 }
