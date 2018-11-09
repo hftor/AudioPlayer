@@ -32,27 +32,13 @@ class PlayerActivity : AppCompatActivity() {
 
             vm.songs = songJob.await()
             initializePlayer()
-
-            previousButton.setOnClickListener({
-                playPrevious()
-            })
-
-            rewindButton.setOnClickListener {
-                rewind()
-            }
-
-            playOrPauseButton.setOnClickListener {
-                playOrPause()
-            }
-
-            forwardButton.setOnClickListener {
-                fastForward()
-            }
-
-            nextButton.setOnClickListener({
-                playNext()
-            })
+            initializeButtons()
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        vm.saveState(this)
+        super.onSaveInstanceState(outState)
     }
 
     private fun initializePlayer(){
@@ -60,12 +46,14 @@ class PlayerActivity : AppCompatActivity() {
             songTitle.text = "No songs :("
             return
         }
+
         vm.song = vm.getLastPlayedSong(this)
         vm.songMaxIndex = vm.songs.count() - 1
 
-
         vm.mediaPlayer?.reset()
         vm.mediaPlayer = MediaPlayer.create(ctx,vm.song.uri)
+
+        vm.goToSongsSavedPosition(this)
     }
 
 
@@ -123,5 +111,27 @@ class PlayerActivity : AppCompatActivity() {
         val factory = InjectorUtils.providePlayerViewModelFactory()
         vm = ViewModelProviders.of(this, factory)
                 .get(PlayerViewModel::class.java)
+    }
+
+    private fun initializeButtons(){
+        previousButton.setOnClickListener({
+            playPrevious()
+        })
+
+        rewindButton.setOnClickListener {
+            rewind()
+        }
+
+        playOrPauseButton.setOnClickListener {
+            playOrPause()
+        }
+
+        forwardButton.setOnClickListener {
+            fastForward()
+        }
+
+        nextButton.setOnClickListener({
+            playNext()
+        })
     }
 }

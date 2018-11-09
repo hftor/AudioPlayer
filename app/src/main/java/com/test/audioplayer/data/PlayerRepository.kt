@@ -26,6 +26,10 @@ class PlayerRepository private constructor(private val playerDao: PlayerDAO) {
         return playerDao.getCurrentSong(activity, key)
     }
 
+    fun getSongPosition(activity: Activity, key: String) : Int{
+        return playerDao.getSongPosition(activity, key)
+    }
+
     fun getFiles() = playerDao.getFiles()
 
     companion object {

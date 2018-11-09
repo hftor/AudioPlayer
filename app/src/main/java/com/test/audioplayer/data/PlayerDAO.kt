@@ -44,5 +44,11 @@ class PlayerDAO {
         return sharedPref.getString(key, defaultValue)
     }
 
+    fun getSongPosition(activity: Activity, key: String) : Int{
+        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return 0
+        val defaultValue = 0
+        return sharedPref.getInt(key, defaultValue)
+    }
+
     fun getFiles() = files
 }

@@ -12,7 +12,8 @@ import java.io.File
  * Created by hafthorg on 07/11/2018.
  */
 class PlayerViewModel(private val playerRepository: PlayerRepository) : ViewModel(){
-    private val CURRENT_SONG : String = "current_song_name"
+    private val CURRENT_SONG : String = "current_song_name1"
+    private val SONG_POSITION : String = "song_position1"
 
     var mediaPlayer: MediaPlayer? = null
 
@@ -24,7 +25,28 @@ class PlayerViewModel(private val playerRepository: PlayerRepository) : ViewMode
 
     fun getFiles() = playerRepository.getFiles()
     fun populateFiles( files: List<File>) = playerRepository.populateFiles(files)
-    fun saveCurrentSong(activity: Activity, value: String) = playerRepository.saveCurrentSong(activity, CURRENT_SONG, value)
+
+
+    fun play(activity: Activity, ctx: Context, newSong: Boolean = false){
+        if(newSong){
+            mediaPlayer?.reset()
+            mediaPlayer = MediaPlayer.create(ctx, song.uri)
+        }
+
+        mediaPlayer?.start()
+    }
+
+    fun pause(){
+        mediaPlayer?.pause()
+    }
+
+    fun fastForward(){
+        mediaPlayer?.seekTo(getSongCurrentPosition() + 10000)
+    }
+
+    fun rewind(){
+        mediaPlayer?.seekTo(getSongCurrentPosition() - 10000)
+    }
 
     fun getLastPlayedSong(activity: Activity) : MusicFinder.Song{
         var songTitle = playerRepository.getCurrentSong(activity, CURRENT_SONG)
@@ -39,31 +61,19 @@ class PlayerViewModel(private val playerRepository: PlayerRepository) : ViewMode
         return songs[0]
     }
 
+    fun goToSongsSavedPosition(activity: Activity){
+        var songPos = playerRepository.getSongPosition(activity, SONG_POSITION)
+        mediaPlayer?.seekTo(songPos)
+    }
+
     fun getSongCurrentPosition() : Int
     {
         var currPos = mediaPlayer?.currentPosition
         return if(currPos == null) 0 else currPos
     }
 
-    fun play(activity: Activity, ctx: Context, newSong: Boolean = false){
-        if(newSong){
-            mediaPlayer?.reset()
-            mediaPlayer = MediaPlayer.create(ctx, song.uri)
-        }
-
-        mediaPlayer?.start()
-        saveCurrentSong(activity, song.title)
-    }
-
-    fun pause(){
-        mediaPlayer?.pause()
-    }
-
-    fun fastForward(){
-        mediaPlayer?.seekTo(getSongCurrentPosition() + 10000)
-    }
-
-    fun rewind(){
-        mediaPlayer?.seekTo(getSongCurrentPosition() - 10000)
+    fun saveState(activity: Activity){
+        playerRepository.saveCurrentSong(activity, CURRENT_SONG, song.title)
+        playerRepository.saveSongPosition(activity, SONG_POSITION, getSongCurrentPosition())
     }
 }
