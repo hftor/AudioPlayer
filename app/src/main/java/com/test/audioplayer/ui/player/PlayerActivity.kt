@@ -41,7 +41,7 @@ class PlayerActivity : AppCompatActivity() {
                 song = songs[0]
             }
 
-            playRandom()
+            playFirst()
         }
 
         initializeUi()
@@ -61,12 +61,12 @@ class PlayerActivity : AppCompatActivity() {
         })
     }
 
-    fun playRandom(){
+    fun playFirst(){
 
         mediaPlayer?.reset()
         mediaPlayer = MediaPlayer.create(ctx,song.uri)
         mediaPlayer?.setOnCompletionListener {
-            playRandom()
+            playFirst()
         }
 
         songArtist.text = song.artist
