@@ -24,5 +24,17 @@ class PlayerViewModel(private val playerRepository: PlayerRepository) : ViewMode
     fun getFiles() = playerRepository.getFiles()
     fun populateFiles( files: List<File>) = playerRepository.populateFiles(files)
     fun saveCurrentSong(activity: Activity, value: String) = playerRepository.saveCurrentSong(activity, CURRENT_SONG, value)
-    fun getLastPlayedSong(activity: Activity) = playerRepository.getCurrentSong(activity, CURRENT_SONG)
+
+    fun getLastPlayedSong(activity: Activity) : MusicFinder.Song{
+        var songTitle = playerRepository.getCurrentSong(activity, CURRENT_SONG)
+
+        songs.forEach {
+            s -> if(s.title == songTitle){
+            songCurrentIndex = songs.indexOf(s)
+            return s
+            }
+        }
+
+        return songs[0]
+    }
 }

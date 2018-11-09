@@ -63,7 +63,7 @@ class PlayerActivity : AppCompatActivity() {
             songTitle.text = "No songs :("
             return
         }
-        vm.song = getLastPlayedSong()
+        vm.song = vm.getLastPlayedSong(this)
         vm.songMaxIndex = vm.songs.count() - 1
 
 
@@ -71,18 +71,6 @@ class PlayerActivity : AppCompatActivity() {
         vm.mediaPlayer = MediaPlayer.create(ctx,vm.song.uri)
     }
 
-    private fun getLastPlayedSong() : MusicFinder.Song{
-        var songTitle = vm.getLastPlayedSong(this)
-
-        vm.songs.forEach {
-            s -> if(s.title == songTitle){
-                vm.songCurrentIndex = vm.songs.indexOf(s)
-                return s
-            }
-        }
-
-        return vm.songs[0]
-    }
 
     private fun rewind(){
         vm.mediaPlayer?.seekTo(getSongCurrentPosition() - 10000)
