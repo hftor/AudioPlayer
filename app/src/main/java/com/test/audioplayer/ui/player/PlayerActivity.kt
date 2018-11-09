@@ -23,7 +23,7 @@ class PlayerActivity : AppCompatActivity() {
     protected lateinit var song : MusicFinder.Song
     protected lateinit var songs : MutableList<MusicFinder.Song>
     protected lateinit var vm : PlayerViewModel
-    var mediaPlayer: MediaPlayer? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,8 +72,8 @@ class PlayerActivity : AppCompatActivity() {
         songMaxIndex = songs.count() - 1
 
 
-        mediaPlayer?.reset()
-        mediaPlayer = MediaPlayer.create(ctx,song.uri)
+        vm.mediaPlayer?.reset()
+        vm.mediaPlayer = MediaPlayer.create(ctx,song.uri)
     }
 
     private fun getLastPlayedSong() : MusicFinder.Song{
@@ -90,7 +90,7 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     private fun rewind(){
-        mediaPlayer?.seekTo(getSongCurrentPosition() - 10000)
+        vm.mediaPlayer?.seekTo(getSongCurrentPosition() - 10000)
     }
 
     private fun playNext(){
@@ -103,7 +103,7 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     private fun fastForward(){
-        mediaPlayer?.seekTo(getSongCurrentPosition() + 10000)
+        vm.mediaPlayer?.seekTo(getSongCurrentPosition() + 10000)
     }
 
     private fun playPrevious(){
@@ -117,7 +117,7 @@ class PlayerActivity : AppCompatActivity() {
 
     private fun getSongCurrentPosition() : Int
     {
-        var currPos = mediaPlayer?.currentPosition
+        var currPos = vm.mediaPlayer?.currentPosition
         return if(currPos == null) 0 else currPos
     }
 
@@ -129,22 +129,22 @@ class PlayerActivity : AppCompatActivity() {
 
     fun play(newSong: Boolean = false){
         if(newSong){
-            mediaPlayer?.reset()
-            mediaPlayer = MediaPlayer.create(ctx,song.uri)
+            vm.mediaPlayer?.reset()
+            vm.mediaPlayer = MediaPlayer.create(ctx,song.uri)
         }
         songArtist.text = song.artist
         songTitle?.text = song.title
         imageView.imageURI = song.albumArt
-        mediaPlayer?.start()
+        vm.mediaPlayer?.start()
         vm.saveCurrentSong(this, song.title)
     }
 
     fun pause(){
-        mediaPlayer?.pause()
+        vm.mediaPlayer?.pause()
     }
 
     fun playOrPause(){
-        var songPlaying:Boolean? = mediaPlayer?.isPlaying
+        var songPlaying:Boolean? = vm.mediaPlayer?.isPlaying
 
         if(songPlaying == true){
             pause()

@@ -2,6 +2,7 @@ package com.test.audioplayer.ui.player
 
 import android.app.Activity
 import android.arch.lifecycle.ViewModel
+import android.media.MediaPlayer
 import com.test.audioplayer.data.PlayerRepository
 import java.io.File
 
@@ -10,6 +11,8 @@ import java.io.File
  */
 class PlayerViewModel(private val playerRepository: PlayerRepository) : ViewModel(){
     private val CURRENT_SONG : String = "current_song_name"
+
+    var mediaPlayer: MediaPlayer? = null
 
     fun getFiles() = playerRepository.getFiles()
     fun populateFiles( files: List<File>) = playerRepository.populateFiles(files)
