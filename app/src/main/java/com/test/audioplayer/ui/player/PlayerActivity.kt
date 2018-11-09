@@ -59,8 +59,6 @@ class PlayerActivity : AppCompatActivity() {
             nextButton.setOnClickListener({
                 playNext()
             })
-
-
         }
 
         initializeUi()
@@ -73,6 +71,10 @@ class PlayerActivity : AppCompatActivity() {
         }
         song = songs[0]
         songMaxIndex = songs.count() - 1
+
+
+        mediaPlayer?.reset()
+        mediaPlayer = MediaPlayer.create(ctx,song.uri)
     }
 
     private fun rewind(){
@@ -85,7 +87,7 @@ class PlayerActivity : AppCompatActivity() {
         }
 
         song = songs[++songCurrentIndex]
-        play()
+        play(true)
     }
 
     private fun fastForward(){
@@ -98,7 +100,7 @@ class PlayerActivity : AppCompatActivity() {
         }
 
         song = songs[--songCurrentIndex]
-        play()
+        play(true)
     }
 
     private fun getSongCurrentPosition() : Int
@@ -121,14 +123,11 @@ class PlayerActivity : AppCompatActivity() {
         })
     }
 
-    fun play(){
-
-        mediaPlayer?.reset()
-        mediaPlayer = MediaPlayer.create(ctx,song.uri)
-        mediaPlayer?.setOnCompletionListener {
-            play()
+    fun play(newSong: Boolean = false){
+        if(newSong){
+            mediaPlayer?.reset()
+            mediaPlayer = MediaPlayer.create(ctx,song.uri)
         }
-
         songArtist.text = song.artist
         songTitle?.text = song.title
         imageView.imageURI = song.albumArt
