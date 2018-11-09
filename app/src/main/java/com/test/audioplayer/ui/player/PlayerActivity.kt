@@ -10,6 +10,7 @@ import com.mtechviral.mplaylib.MusicFinder
 import com.test.audioplayer.R
 import com.test.audioplayer.utilities.InjectorUtils
 import kotlinx.android.synthetic.main.activity_player.*
+import kotlinx.coroutines.experimental.runBlocking
 import org.jetbrains.anko.ctx
 import org.jetbrains.anko.image
 import org.jetbrains.anko.imageResource
@@ -43,8 +44,16 @@ class PlayerActivity : AppCompatActivity() {
                 playPrevious()
             })
 
+            rewindButton.setOnClickListener {
+                rewind()
+            }
+
             playButton.setOnClickListener {
                 play()
+            }
+
+            forwardButton.setOnClickListener {
+                fastForward()
             }
 
             nextButton.setOnClickListener({
@@ -66,6 +75,10 @@ class PlayerActivity : AppCompatActivity() {
         songMaxIndex = songs.count() - 1
     }
 
+    private fun rewind(){
+        mediaPlayer?.seekTo(getSongCurrentPosition() - 10000)
+    }
+
     private fun playNext(){
         if(songCurrentIndex >= songMaxIndex){
             return
@@ -75,6 +88,10 @@ class PlayerActivity : AppCompatActivity() {
         play()
     }
 
+    private fun fastForward(){
+        mediaPlayer?.seekTo(getSongCurrentPosition() + 10000)
+    }
+
     private fun playPrevious(){
         if(songCurrentIndex <= 0){
             return
@@ -82,6 +99,12 @@ class PlayerActivity : AppCompatActivity() {
 
         song = songs[--songCurrentIndex]
         play()
+    }
+
+    private fun getSongCurrentPosition() : Int
+    {
+        var currPos = mediaPlayer?.currentPosition
+        return if(currPos == null) 0 else currPos
     }
 
     private fun initializeUi(){
