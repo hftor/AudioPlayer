@@ -1,14 +1,11 @@
 package com.test.audioplayer.ui.player
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProviders
 import android.media.MediaPlayer
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.mtechviral.mplaylib.MusicFinder
 import com.test.audioplayer.R
-import com.test.audioplayer.data.PlayerRepository
 import com.test.audioplayer.utilities.InjectorUtils
 import kotlinx.android.synthetic.main.activity_player.*
 import org.jetbrains.anko.ctx
@@ -73,7 +70,7 @@ class PlayerActivity : AppCompatActivity() {
 
 
     private fun rewind(){
-        vm.mediaPlayer?.seekTo(getSongCurrentPosition() - 10000)
+        vm.mediaPlayer?.seekTo(vm.getSongCurrentPosition() - 10000)
     }
 
     private fun playNext(){
@@ -86,7 +83,7 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     private fun fastForward(){
-        vm.mediaPlayer?.seekTo(getSongCurrentPosition() + 10000)
+        vm.mediaPlayer?.seekTo(vm.getSongCurrentPosition() + 10000)
     }
 
     private fun playPrevious(){
@@ -96,12 +93,6 @@ class PlayerActivity : AppCompatActivity() {
 
         vm.song = vm.songs[--vm.songCurrentIndex]
         play(true)
-    }
-
-    private fun getSongCurrentPosition() : Int
-    {
-        var currPos = vm.mediaPlayer?.currentPosition
-        return if(currPos == null) 0 else currPos
     }
 
     private fun initializeViewModel(){

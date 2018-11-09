@@ -37,4 +37,10 @@ class PlayerViewModel(private val playerRepository: PlayerRepository) : ViewMode
 
         return songs[0]
     }
+
+    fun getSongCurrentPosition() : Int
+    {
+        var currPos = mediaPlayer?.currentPosition
+        return if(currPos == null) 0 else currPos
+    }
 }
