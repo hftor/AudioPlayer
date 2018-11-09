@@ -1,6 +1,7 @@
 package com.test.audioplayer.ui.player
 
 import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProviders
 import android.media.MediaPlayer
 import android.support.v7.app.AppCompatActivity
@@ -21,11 +22,14 @@ class PlayerActivity : AppCompatActivity() {
     protected var songMaxIndex : Int = 0
     protected lateinit var song : MusicFinder.Song
     protected lateinit var songs : MutableList<MusicFinder.Song>
+    protected lateinit var vm : PlayerViewModel
     var mediaPlayer: MediaPlayer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_player)
+
+        initializeViewModel()
 
         kotlinx.coroutines.experimental.async {
             var songJob = kotlinx.coroutines.experimental.async {
@@ -57,8 +61,6 @@ class PlayerActivity : AppCompatActivity() {
                 playNext()
             })
         }
-
-        initializeUi()
     }
 
     private fun initializePlayer(){
@@ -66,12 +68,25 @@ class PlayerActivity : AppCompatActivity() {
             songTitle.text = "No songs :("
             return
         }
-        song = songs[0]
+        song = getLastPlayedSong()
         songMaxIndex = songs.count() - 1
 
 
         mediaPlayer?.reset()
         mediaPlayer = MediaPlayer.create(ctx,song.uri)
+    }
+
+    private fun getLastPlayedSong() : MusicFinder.Song{
+        var songTitle = vm.getLastPlayedSong(this)
+
+        songs.forEach {
+            s -> if(s.title == songTitle){
+                songCurrentIndex = songs.indexOf(s)
+                return s
+            }
+        }
+
+        return songs[0]
     }
 
     private fun rewind(){
@@ -106,18 +121,10 @@ class PlayerActivity : AppCompatActivity() {
         return if(currPos == null) 0 else currPos
     }
 
-    private fun initializeUi(){
+    private fun initializeViewModel(){
         val factory = InjectorUtils.providePlayerViewModelFactory()
-        val viewModel = ViewModelProviders.of(this, factory)
+        vm = ViewModelProviders.of(this, factory)
                 .get(PlayerViewModel::class.java)
-
-        viewModel.getFiles().observe(this, Observer { files ->
-            val stringBuilder = StringBuilder()
-            files?.forEach { file ->
-                stringBuilder.append("$file\n\n")
-            }
-            songTitle.text = "someCool text"
-        })
     }
 
     fun play(newSong: Boolean = false){
@@ -129,6 +136,7 @@ class PlayerActivity : AppCompatActivity() {
         songTitle?.text = song.title
         imageView.imageURI = song.albumArt
         mediaPlayer?.start()
+        vm.saveCurrentSong(this, song.title)
     }
 
     fun pause(){
