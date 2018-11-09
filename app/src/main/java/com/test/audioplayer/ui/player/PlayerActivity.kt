@@ -91,7 +91,7 @@ class PlayerActivity : AppCompatActivity() {
         songArtist.text = vm.song.artist
         songTitle?.text = vm.song.title
         imageView.imageURI = vm.song.albumArt
-        vm.play(this, ctx, newSong)
+        vm.play(ctx, newSong)
     }
 
     fun playOrPause(){

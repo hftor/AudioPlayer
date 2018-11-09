@@ -27,7 +27,7 @@ class PlayerViewModel(private val playerRepository: PlayerRepository) : ViewMode
     fun populateFiles( files: List<File>) = playerRepository.populateFiles(files)
 
 
-    fun play(activity: Activity, ctx: Context, newSong: Boolean = false){
+    fun play(ctx: Context, newSong: Boolean = false){
         if(newSong){
             mediaPlayer?.reset()
             mediaPlayer = MediaPlayer.create(ctx, song.uri)
