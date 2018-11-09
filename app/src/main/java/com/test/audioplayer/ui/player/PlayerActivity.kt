@@ -48,8 +48,8 @@ class PlayerActivity : AppCompatActivity() {
                 rewind()
             }
 
-            playButton.setOnClickListener {
-                play()
+            playOrPauseButton.setOnClickListener {
+                playOrPause()
             }
 
             forwardButton.setOnClickListener {
@@ -135,16 +135,20 @@ class PlayerActivity : AppCompatActivity() {
         mediaPlayer?.start()
     }
 
+    fun pause(){
+        mediaPlayer?.pause()
+    }
+
     fun playOrPause(){
         var songPlaying:Boolean? = mediaPlayer?.isPlaying
 
-//        if(songPlaying == true){
-//            mediaPlayer?.pause()
-//            playButton?.imageResource = R.drawable.ic_play_circle_outline_black_24dp
-//        }
-//        else{
-//            mediaPlayer?.start()
-//            playButton?.imageResource = R.drawable.ic_pause_circle_outline_black_24dp
-//        }
+        if(songPlaying == true){
+            pause()
+            playOrPauseButton?.imageResource = R.drawable.ic_play_circle_outline_black_24dp
+        }
+        else{
+            play()
+            playOrPauseButton?.imageResource = R.drawable.ic_pause_circle_outline_black_24dp
+        }
     }
 }
