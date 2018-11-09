@@ -3,6 +3,7 @@ package com.test.audioplayer.ui.player
 import android.app.Activity
 import android.arch.lifecycle.ViewModel
 import android.media.MediaPlayer
+import com.mtechviral.mplaylib.MusicFinder
 import com.test.audioplayer.data.PlayerRepository
 import java.io.File
 
@@ -16,6 +17,9 @@ class PlayerViewModel(private val playerRepository: PlayerRepository) : ViewMode
 
     var songCurrentIndex : Int = 0
     var songMaxIndex : Int = 0
+
+    lateinit var song : MusicFinder.Song
+    lateinit var songs : MutableList<MusicFinder.Song>
 
     fun getFiles() = playerRepository.getFiles()
     fun populateFiles( files: List<File>) = playerRepository.populateFiles(files)

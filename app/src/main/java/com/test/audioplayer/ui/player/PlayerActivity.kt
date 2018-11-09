@@ -18,10 +18,7 @@ import org.jetbrains.anko.imageURI
 
 class PlayerActivity : AppCompatActivity() {
 
-    protected lateinit var song : MusicFinder.Song
-    protected lateinit var songs : MutableList<MusicFinder.Song>
     protected lateinit var vm : PlayerViewModel
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +33,7 @@ class PlayerActivity : AppCompatActivity() {
                 songFinder.allSongs
             }
 
-            songs = songJob.await()
+            vm.songs = songJob.await()
             initializePlayer()
 
             previousButton.setOnClickListener({
@@ -62,29 +59,29 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     private fun initializePlayer(){
-        if(!songs.any()){
+        if(!vm.songs.any()){
             songTitle.text = "No songs :("
             return
         }
-        song = getLastPlayedSong()
-        vm.songMaxIndex = songs.count() - 1
+        vm.song = getLastPlayedSong()
+        vm.songMaxIndex = vm.songs.count() - 1
 
 
         vm.mediaPlayer?.reset()
-        vm.mediaPlayer = MediaPlayer.create(ctx,song.uri)
+        vm.mediaPlayer = MediaPlayer.create(ctx,vm.song.uri)
     }
 
     private fun getLastPlayedSong() : MusicFinder.Song{
         var songTitle = vm.getLastPlayedSong(this)
 
-        songs.forEach {
+        vm.songs.forEach {
             s -> if(s.title == songTitle){
-                vm.songCurrentIndex = songs.indexOf(s)
+                vm.songCurrentIndex = vm.songs.indexOf(s)
                 return s
             }
         }
 
-        return songs[0]
+        return vm.songs[0]
     }
 
     private fun rewind(){
@@ -96,7 +93,7 @@ class PlayerActivity : AppCompatActivity() {
             return
         }
 
-        song = songs[++vm.songCurrentIndex]
+        vm.song = vm.songs[++vm.songCurrentIndex]
         play(true)
     }
 
@@ -109,7 +106,7 @@ class PlayerActivity : AppCompatActivity() {
             return
         }
 
-        song = songs[--vm.songCurrentIndex]
+        vm.song = vm.songs[--vm.songCurrentIndex]
         play(true)
     }
 
@@ -128,13 +125,13 @@ class PlayerActivity : AppCompatActivity() {
     fun play(newSong: Boolean = false){
         if(newSong){
             vm.mediaPlayer?.reset()
-            vm.mediaPlayer = MediaPlayer.create(ctx,song.uri)
+            vm.mediaPlayer = MediaPlayer.create(ctx,vm.song.uri)
         }
-        songArtist.text = song.artist
-        songTitle?.text = song.title
-        imageView.imageURI = song.albumArt
+        songArtist.text = vm.song.artist
+        songTitle?.text = vm.song.title
+        imageView.imageURI = vm.song.albumArt
         vm.mediaPlayer?.start()
-        vm.saveCurrentSong(this, song.title)
+        vm.saveCurrentSong(this, vm.song.title)
     }
 
     fun pause(){
