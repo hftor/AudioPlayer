@@ -18,8 +18,6 @@ import org.jetbrains.anko.imageURI
 
 class PlayerActivity : AppCompatActivity() {
 
-    protected var songCurrentIndex : Int = 0
-    protected var songMaxIndex : Int = 0
     protected lateinit var song : MusicFinder.Song
     protected lateinit var songs : MutableList<MusicFinder.Song>
     protected lateinit var vm : PlayerViewModel
@@ -69,7 +67,7 @@ class PlayerActivity : AppCompatActivity() {
             return
         }
         song = getLastPlayedSong()
-        songMaxIndex = songs.count() - 1
+        vm.songMaxIndex = songs.count() - 1
 
 
         vm.mediaPlayer?.reset()
@@ -81,7 +79,7 @@ class PlayerActivity : AppCompatActivity() {
 
         songs.forEach {
             s -> if(s.title == songTitle){
-                songCurrentIndex = songs.indexOf(s)
+                vm.songCurrentIndex = songs.indexOf(s)
                 return s
             }
         }
@@ -94,11 +92,11 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     private fun playNext(){
-        if(songCurrentIndex >= songMaxIndex){
+        if(vm.songCurrentIndex >= vm.songMaxIndex){
             return
         }
 
-        song = songs[++songCurrentIndex]
+        song = songs[++vm.songCurrentIndex]
         play(true)
     }
 
@@ -107,11 +105,11 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     private fun playPrevious(){
-        if(songCurrentIndex <= 0){
+        if(vm.songCurrentIndex <= 0){
             return
         }
 
-        song = songs[--songCurrentIndex]
+        song = songs[--vm.songCurrentIndex]
         play(true)
     }
 

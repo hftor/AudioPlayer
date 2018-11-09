@@ -14,6 +14,9 @@ class PlayerViewModel(private val playerRepository: PlayerRepository) : ViewMode
 
     var mediaPlayer: MediaPlayer? = null
 
+    var songCurrentIndex : Int = 0
+    var songMaxIndex : Int = 0
+
     fun getFiles() = playerRepository.getFiles()
     fun populateFiles( files: List<File>) = playerRepository.populateFiles(files)
     fun saveCurrentSong(activity: Activity, value: String) = playerRepository.saveCurrentSong(activity, CURRENT_SONG, value)
