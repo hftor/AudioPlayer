@@ -12,6 +12,8 @@ import org.jetbrains.anko.ctx
 import org.jetbrains.anko.imageResource
 import org.jetbrains.anko.imageURI
 
+import android.databinding.DataBindingUtil
+import com.test.audioplayer.databinding.ActivityPlayerBinding
 
 class PlayerActivity : AppCompatActivity() {
 
@@ -21,7 +23,15 @@ class PlayerActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_player)
 
-        initializeViewModel()
+        val binding: ActivityPlayerBinding = DataBindingUtil.setContentView(this, R.layout.activity_player)
+
+        val factory = InjectorUtils.providePlayerViewModelFactory()
+        vm = ViewModelProviders.of(this, factory)
+                .get(PlayerViewModel::class.java)
+
+        binding.player = vm.player
+
+        //initializeViewModel()
 
         kotlinx.coroutines.experimental.async {
             var songJob = kotlinx.coroutines.experimental.async {
@@ -30,7 +40,7 @@ class PlayerActivity : AppCompatActivity() {
                 songFinder.allSongs
             }
 
-            vm.songs = songJob.await()
+            vm.player.songs = songJob.await()
             initializePlayer()
             initializeButtons()
         }
@@ -42,16 +52,16 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     private fun initializePlayer(){
-        if(!vm.songs.any()){
-            songTitle.text = "No songs :("
+        if(!vm.player.songs.any()){
+            //songTitle.text = "No songs :("
             return
         }
 
-        vm.song = vm.getLastPlayedSong(this)
-        vm.songMaxIndex = vm.songs.count() - 1
+        vm.player.song = vm.getLastPlayedSong(this)
+        vm.songMaxIndex = vm.player.songs.count() - 1
 
-        vm.mediaPlayer?.reset()
-        vm.mediaPlayer = MediaPlayer.create(ctx,vm.song.uri)
+        vm.player.mediaPlayer?.reset()
+        vm.player.mediaPlayer = MediaPlayer.create(ctx,vm.player.song.uri)
 
         vm.goToSongsSavedPosition(this)
     }
@@ -70,7 +80,7 @@ class PlayerActivity : AppCompatActivity() {
             return
         }
 
-        vm.song = vm.songs[--vm.songCurrentIndex]
+        vm.player.song = vm.player.songs[--vm.songCurrentIndex]
         play(true)
     }
 
@@ -79,7 +89,7 @@ class PlayerActivity : AppCompatActivity() {
             return
         }
 
-        vm.song = vm.songs[++vm.songCurrentIndex]
+        vm.player.song = vm.player.songs[++vm.songCurrentIndex]
         play(true)
     }
 
@@ -88,14 +98,14 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     private fun play(newSong: Boolean = false){
-        songArtist.text = vm.song.artist
-        songTitle?.text = vm.song.title
-        imageView.imageURI = vm.song.albumArt
+        //songArtist.text = vm.player.song.artist
+        //songTitle?.text = vm.song.title
+        //imageView.imageURI = vm.song.albumArt
         vm.play(ctx, newSong)
     }
 
     fun playOrPause(){
-        var songPlaying:Boolean? = vm.mediaPlayer?.isPlaying
+        var songPlaying:Boolean? = vm.player.mediaPlayer?.isPlaying
 
         if(songPlaying == true){
             pause()

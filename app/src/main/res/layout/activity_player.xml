@@ -1,116 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.test.audioplayer.ui.player.PlayerActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="player"
+            type="com.test.audioplayer.data.Player">
+        </variable>
+    </data>
 
-    <TextView
-        android:id="@+id/songArtist"
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="46dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:scrollbars="vertical"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.55"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        tools:text="Artist" />
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/songArtist"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:scrollbars="vertical"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.55"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
 
-    <TextView
-        android:id="@+id/songTitle"
-        android:layout_width="match_parent"
-        android:layout_height="46dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="48dp"
-        android:scrollbars="vertical"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.55"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        tools:text="Title" />
+            android:text="@{player.song.artist}" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="174dp"
-        android:src="@mipmap/ic_launcher"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.55"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.581" />
+       <TextView
+            android:id="@+id/songTitle"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="48dp"
+            android:scrollbars="vertical"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.55"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
 
-    <TableRow
-        android:id="@+id/buttonRow"
-        android:layout_width="368dp"
-        android:layout_height="125dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.55"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.958"
-        android:weightSum="5"
-        android:gravity="center">
+            android:text="@{player.song.title}" />
 
-        <ImageButton
-            android:id="@+id/previousButton"
-            android:layout_width="70dp"
-            android:layout_height="61dp"
-            app:srcCompat="@drawable/ic_skip_previous_black_24dp"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="143dp" />
+        <ImageView
 
-        <ImageButton
-            android:id="@+id/rewindButton"
-            android:layout_width="70dp"
-            android:layout_height="61dp"
-            app:srcCompat="@drawable/ic_replay_10_black_24dp"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="143dp" />
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="174dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.55"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.581"
+            android:src="@{player.song.URI}"/>
 
-        <ImageButton
-            android:id="@+id/playOrPauseButton"
-            android:layout_width="70dp"
-            android:layout_height="61dp"
-            app:srcCompat="@drawable/ic_play_circle_outline_black_24dp"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="143dp" />
+      <TableRow
+            android:id="@+id/buttonRow"
+            android:layout_width="368dp"
+            android:layout_height="125dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.55"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.958"
+            android:weightSum="5"
+            android:gravity="center">
 
-        <ImageButton
-            android:id="@+id/forwardButton"
-            android:layout_width="70dp"
-            android:layout_height="61dp"
-            app:srcCompat="@drawable/ic_forward_10_black_24dp"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="143dp" />
+            <ImageButton
+                android:id="@+id/previousButton"
+                android:layout_width="70dp"
+                android:layout_height="61dp"
+                app:srcCompat="@drawable/ic_skip_previous_black_24dp"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="143dp" />
 
-        <ImageButton
-            android:id="@+id/nextButton"
-            android:layout_width="70dp"
-            android:layout_height="61dp"
-            app:srcCompat="@drawable/ic_skip_next_black_24dp"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="143dp" />
-    </TableRow>
+          <ImageButton
+                android:id="@+id/rewindButton"
+                android:layout_width="70dp"
+                android:layout_height="61dp"
+                app:srcCompat="@drawable/ic_replay_10_black_24dp"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="143dp" />
 
-</android.support.constraint.ConstraintLayout>
+            <ImageButton
+                android:id="@+id/playOrPauseButton"
+                android:layout_width="70dp"
+                android:layout_height="61dp"
+                app:srcCompat="@drawable/ic_play_circle_outline_black_24dp"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="143dp" />
+
+            <ImageButton
+                android:id="@+id/forwardButton"
+                android:layout_width="70dp"
+                android:layout_height="61dp"
+                app:srcCompat="@drawable/ic_forward_10_black_24dp"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="143dp" />
+
+            <ImageButton
+                android:id="@+id/nextButton"
+                android:layout_width="70dp"
+                android:layout_height="61dp"
+                app:srcCompat="@drawable/ic_skip_next_black_24dp"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="143dp" />-->
+        </TableRow>
+
+    </android.support.constraint.ConstraintLayout>
+</layout>
+
