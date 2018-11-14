@@ -28,23 +28,23 @@ class PlayerViewModel(private val playerRepository: PlayerRepository) : ViewMode
 
     fun play(ctx: Context, newSong: Boolean = false){
         if(newSong){
-            player.mediaPlayer?.reset()
+            player.mediaPlayer.reset()
             player.mediaPlayer = MediaPlayer.create(ctx, player.song.uri)
         }
 
-        player.mediaPlayer?.start()
+        player.mediaPlayer.start()
     }
 
     fun pause(){
-        player.mediaPlayer?.pause()
+        player.mediaPlayer.pause()
     }
 
     fun fastForward(){
-        player.mediaPlayer?.seekTo(getSongCurrentPosition() + 10000)
+        player.mediaPlayer.seekTo(getSongCurrentPosition() + 10000)
     }
 
     fun rewind(){
-        player.mediaPlayer?.seekTo(getSongCurrentPosition() - 10000)
+        player.mediaPlayer.seekTo(getSongCurrentPosition() - 10000)
     }
 
     fun getLastPlayedSong(activity: Activity) : MusicFinder.Song{
@@ -62,13 +62,13 @@ class PlayerViewModel(private val playerRepository: PlayerRepository) : ViewMode
 
     fun goToSongsSavedPosition(activity: Activity){
         var songPos = playerRepository.getSongPosition(activity, SONG_POSITION)
-        player.mediaPlayer?.seekTo(songPos)
+        player.mediaPlayer.seekTo(songPos)
     }
 
     fun getSongCurrentPosition() : Int
     {
-        var currPos = player.mediaPlayer?.currentPosition
-        return if(currPos == null) 0 else currPos
+        var currPos = player.mediaPlayer.currentPosition
+        return currPos
     }
 
     fun saveState(activity: Activity){

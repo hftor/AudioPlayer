@@ -23,7 +23,7 @@ class PlayerDAO {
     }
 
     fun saveCurrentSong(activity: Activity, key: String, value: String){
-        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
+        val sharedPref = activity.getPreferences(Context.MODE_PRIVATE) ?: return
         with (sharedPref.edit()) {
             putString(key, value)
             commit()
@@ -31,7 +31,7 @@ class PlayerDAO {
     }
 
     fun saveSongPosition(activity: Activity, key: String, value: Int){
-        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
+        val sharedPref = activity.getPreferences(Context.MODE_PRIVATE) ?: return
         with (sharedPref.edit()) {
             putInt(key, value)
             commit()
@@ -39,13 +39,13 @@ class PlayerDAO {
     }
 
     fun getCurrentSong(activity: Activity, key: String) : String{
-        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return ""
+        val sharedPref = activity.getPreferences(Context.MODE_PRIVATE) ?: return ""
         val defaultValue = ""
         return sharedPref.getString(key, defaultValue)
     }
 
     fun getSongPosition(activity: Activity, key: String) : Int{
-        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return 0
+        val sharedPref = activity.getPreferences(Context.MODE_PRIVATE) ?: return 0
         val defaultValue = 0
         return sharedPref.getInt(key, defaultValue)
     }
