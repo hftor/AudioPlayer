@@ -30,14 +30,6 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
-    var songTitle: TextView? = null
-    var songArtist: TextView? = null
-    var albumArt: ImageView? = null
-
-    var playButton: ImageButton? = null;
-
-    var mediaPlayer: MediaPlayer? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -54,9 +46,8 @@ class MainActivity : AppCompatActivity() {
         }
         else
         {
-            createPlayer()
+            // createPlayer()
         }
-
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -64,100 +55,11 @@ class MainActivity : AppCompatActivity() {
 
         if(grantResults[0] == PackageManager.PERMISSION_GRANTED)
         {
-            createPlayer()
+            // createPlayer()
         }
         else
         {
             longToast("Permission not granterd")
-        }
-    }
-
-    private fun createPlayer()
-    {
-        var songJob = kotlinx.coroutines.experimental.async {
-            val songFinder = MusicFinder(contentResolver)
-            songFinder.prepare()
-            songFinder.allSongs
-        }
-
-        launch(kotlinx.coroutines.experimental.android.UI) {
-            val songs: MutableList<MusicFinder.Song> = songJob.await()
-
-            val playerUI = object:AnkoComponent<MainActivity>
-            {
-                override fun createView(ui: AnkoContext<MainActivity>)= with(ui) {
-
-                    relativeLayout{
-                        backgroundColor = Color.BLACK
-
-                        albumArt = imageView{
-                            scaleType = ImageView.ScaleType.FIT_CENTER
-                        }.lparams(matchParent, matchParent)
-
-                        verticalLayout{
-                            backgroundColor = Color.parseColor("#99000000")
-                            songTitle = textView{
-                                textColor = Color.WHITE
-                                typeface = Typeface.DEFAULT_BOLD
-                                textSize = 18f
-                            }
-
-                            songArtist = textView{
-                                textColor = Color.WHITE
-                            }
-
-                            linearLayout{
-                                playButton = imageButton{
-                                    imageResource = R.drawable.ic_play_circle_outline_black_24dp
-                                    onClick {
-                                        playOrPause()
-                                    }
-                                }.lparams(0, wrapContent,0.5f)
-
-                            }.lparams(matchParent, wrapContent){
-                                topMargin = dip(5)
-                            }
-
-
-
-                        }.lparams(matchParent, wrapContent){
-                            alignParentBottom()
-                        }
-                    }
-
-                }
-
-                fun playRandom(){
-                    Collections.shuffle(songs)
-                    val song = songs[0]
-                    mediaPlayer?.reset()
-                    mediaPlayer = MediaPlayer.create(ctx,song.uri)
-                    mediaPlayer?.setOnCompletionListener {
-                        playRandom()
-                    }
-                    albumArt?.imageURI = song.albumArt
-                    songTitle?.text = song.title
-                    songArtist?.text = song.artist
-                    mediaPlayer?.start()
-                    playButton?.imageResource = R.drawable.ic_play_circle_outline_black_24dp
-                }
-
-                fun playOrPause(){
-                    var songPlaying:Boolean? = mediaPlayer?.isPlaying
-
-                    if(songPlaying == true){
-                        mediaPlayer?.pause()
-                        playButton?.imageResource = R.drawable.ic_play_circle_outline_black_24dp
-                    }
-                    else{
-                        mediaPlayer?.start()
-                        playButton?.imageResource = R.drawable.ic_pause_circle_outline_black_24dp
-                    }
-                }
-            }
-
-            //playerUI.setContentView(this@MainActivity)
-            //playerUI.playRandom()
         }
     }
 
@@ -168,8 +70,6 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -178,10 +78,5 @@ class MainActivity : AppCompatActivity() {
             R.id.action_settings -> true
             else -> super.onOptionsItemSelected(item)
         }
-    }
-
-    override fun onDestroy() {
-        mediaPlayer?.release()
-        super.onDestroy()
     }
 }
