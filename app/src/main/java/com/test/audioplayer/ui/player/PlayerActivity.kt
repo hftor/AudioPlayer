@@ -26,15 +26,7 @@ class PlayerActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_player)
 
-        val binding: ActivityPlayerBinding = DataBindingUtil.setContentView(this, R.layout.activity_player)
-
-        val factory = InjectorUtils.providePlayerViewModelFactory()
-        vm = ViewModelProviders.of(this, factory)
-                .get(PlayerViewModel::class.java)
-
-        binding.player = vm.player
-
-        //initializeViewModel()
+        initializeViewModel()
 
         kotlinx.coroutines.experimental.async {
             var songJob = kotlinx.coroutines.experimental.async {
@@ -117,9 +109,13 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     private fun initializeViewModel(){
+        val binding: ActivityPlayerBinding = DataBindingUtil.setContentView(this, R.layout.activity_player)
+
         val factory = InjectorUtils.providePlayerViewModelFactory()
         vm = ViewModelProviders.of(this, factory)
                 .get(PlayerViewModel::class.java)
+
+        binding.player = vm.player
     }
 
     private fun initializeButtons(){
