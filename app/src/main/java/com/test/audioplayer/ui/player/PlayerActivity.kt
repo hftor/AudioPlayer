@@ -1,6 +1,7 @@
 package com.test.audioplayer.ui.player
 
 import android.arch.lifecycle.ViewModelProviders
+import android.databinding.BindingAdapter
 import android.media.MediaPlayer
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -10,9 +11,11 @@ import com.test.audioplayer.utilities.InjectorUtils
 import kotlinx.android.synthetic.main.activity_player.*
 import org.jetbrains.anko.ctx
 import org.jetbrains.anko.imageResource
-import org.jetbrains.anko.imageURI
 
 import android.databinding.DataBindingUtil
+import android.net.Uri
+import android.widget.ImageView
+import com.bumptech.glide.Glide
 import com.test.audioplayer.databinding.ActivityPlayerBinding
 
 class PlayerActivity : AppCompatActivity() {
@@ -53,7 +56,6 @@ class PlayerActivity : AppCompatActivity() {
 
     private fun initializePlayer(){
         if(!vm.player.songs.any()){
-            //songTitle.text = "No songs :("
             return
         }
 
@@ -98,9 +100,6 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     private fun play(newSong: Boolean = false){
-        //songArtist.text = vm.player.song.artist
-        //songTitle?.text = vm.song.title
-        //imageView.imageURI = vm.song.albumArt
         vm.play(ctx, newSong)
     }
 
@@ -144,4 +143,11 @@ class PlayerActivity : AppCompatActivity() {
             playNext()
         })
     }
+}
+
+@BindingAdapter("imageUri")
+fun ImageView.setImageUri(uri: Uri?) {
+    Glide.with(context)
+            .load(uri)
+            .into(this)
 }
