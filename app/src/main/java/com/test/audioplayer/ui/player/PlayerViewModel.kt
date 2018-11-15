@@ -47,6 +47,24 @@ class PlayerViewModel(private val playerRepository: PlayerRepository) : ViewMode
         player.mediaPlayer.seekTo(getSongCurrentPosition() - 10000)
     }
 
+    fun playPrevious(ctx: Context){
+        if(songCurrentIndex <= 0){
+            return
+        }
+
+        player.song = player.songs[--songCurrentIndex]
+        play(ctx,true)
+    }
+
+    fun playNext(ctx: Context){
+        if(songCurrentIndex >= songMaxIndex){
+            return
+        }
+
+        player.song = player.songs[++songCurrentIndex]
+        play(ctx,true)
+    }
+
     fun getLastPlayedSong(activity: Activity) : MusicFinder.Song{
         var songTitle = playerRepository.getCurrentSong(activity, CURRENT_SONG)
 

@@ -18,7 +18,6 @@ class Player(var mediaPlayer: MediaPlayer) : BaseObservable() {
             _song = value
             notifyPropertyChanged(BR._all)
         }
-
-
+    
     lateinit var songs : MutableList<MusicFinder.Song>
 }

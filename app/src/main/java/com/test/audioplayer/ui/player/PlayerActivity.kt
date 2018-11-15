@@ -70,21 +70,11 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     private fun playPrevious(){
-        if(vm.songCurrentIndex <= 0){
-            return
-        }
-
-        vm.player.song = vm.player.songs[--vm.songCurrentIndex]
-        play(true)
+        vm.playPrevious(ctx)
     }
 
     private fun playNext(){
-        if(vm.songCurrentIndex >= vm.songMaxIndex){
-            return
-        }
-
-        vm.player.song = vm.player.songs[++vm.songCurrentIndex]
-        play(true)
+        vm.playNext(ctx)
     }
 
     private fun pause(){
