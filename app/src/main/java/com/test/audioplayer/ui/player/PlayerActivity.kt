@@ -15,6 +15,8 @@ import org.jetbrains.anko.imageResource
 import android.databinding.DataBindingUtil
 import android.net.Uri
 import android.widget.ImageView
+import android.widget.SeekBar
+import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.test.audioplayer.databinding.ActivityPlayerBinding
 
@@ -58,6 +60,7 @@ class PlayerActivity : AppCompatActivity() {
         vm.player.mediaPlayer = MediaPlayer.create(ctx,vm.player.song.uri)
 
         vm.goToSongsSavedPosition(this)
+        //seekBackTime.text = vm.player.songDuration
     }
 
 
@@ -127,6 +130,23 @@ class PlayerActivity : AppCompatActivity() {
 
         nextButton.setOnClickListener({
             playNext()
+        })
+
+        seekBar.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener{
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+                //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+
+                seekFrontTime.text = progress.toString()
+                //seekBackTime.text = vm.player.songDuration.toString()
+            }
+
         })
     }
 }

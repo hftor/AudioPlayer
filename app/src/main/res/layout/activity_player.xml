@@ -57,15 +57,63 @@
 
             android:id="@+id/imageView"
             android:layout_width="match_parent"
-            android:layout_height="174dp"
+            android:layout_height="132dp"
+            app:imageUri="@{player.song.albumArt}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHeight_percent="0.55"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.581"
-            app:imageUri="@{player.song.albumArt}"/>
+            app:layout_constraintVertical_bias="0.416" />
+
+
+        <TableRow
+            android:id="@+id/seekRow"
+            android:layout_width="match_parent"
+            android:layout_height="27dp"
+            android:layout_marginBottom="170dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="3"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <TextView
+                android:id="@+id/seekFrontTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="hehe"
+                android:textAlignment="viewStart"
+                tools:layout_editor_absoluteX="55dp"
+                tools:layout_editor_absoluteY="295dp" />
+
+            <TextView
+                android:id="@+id/seekSep"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="--------"
+                android:textAlignment="viewStart"
+                tools:layout_editor_absoluteX="55dp"
+                tools:layout_editor_absoluteY="295dp" />
+
+            <TextView
+                android:id="@+id/durationText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{player.songDuration}"
+                android:textAlignment="viewEnd"
+                tools:layout_editor_absoluteX="55dp"
+                tools:layout_editor_absoluteY="295dp" />
+        </TableRow>
+
+        <SeekBar
+            android:id="@+id/seekBar"
+            android:layout_width="match_parent"
+            android:layout_height="27dp"
+            android:layout_marginBottom="140dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
       <TableRow
             android:id="@+id/buttonRow"
@@ -119,8 +167,10 @@
                 android:layout_height="61dp"
                 app:srcCompat="@drawable/ic_skip_next_black_24dp"
                 tools:layout_editor_absoluteX="16dp"
-                tools:layout_editor_absoluteY="143dp" />-->
+                tools:layout_editor_absoluteY="143dp" />
         </TableRow>
+
+
 
     </android.support.constraint.ConstraintLayout>
 </layout>
