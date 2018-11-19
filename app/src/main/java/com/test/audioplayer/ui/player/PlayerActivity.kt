@@ -60,7 +60,6 @@ class PlayerActivity : AppCompatActivity() {
         vm.player.mediaPlayer = MediaPlayer.create(ctx,vm.player.song.uri)
 
         vm.goToSongsSavedPosition(this)
-        //seekBackTime.text = vm.player.songDuration
     }
 
 
