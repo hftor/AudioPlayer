@@ -27,12 +27,7 @@ class PlayerViewModel(private val playerRepository: PlayerRepository) : ViewMode
 
 
     fun play(ctx: Context, newSong: Boolean = false){
-        if(newSong){
-            player.mediaPlayer.reset()
-            player.mediaPlayer = MediaPlayer.create(ctx, player.song.uri)
-        }
-
-        player.mediaPlayer.start()
+        player.play(ctx, newSong)
     }
 
     fun pause(){
@@ -80,7 +75,7 @@ class PlayerViewModel(private val playerRepository: PlayerRepository) : ViewMode
 
     fun goToSongsSavedPosition(activity: Activity){
         var songPos = playerRepository.getSongPosition(activity, SONG_POSITION)
-        player.mediaPlayer.seekTo(songPos)
+        player.goToSongsSavedPosition(songPos)
     }
 
     fun getSongCurrentPosition() : Int
