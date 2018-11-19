@@ -17,15 +17,32 @@ class Player(var mediaPlayer: MediaPlayer) : BaseObservable() {
 
     val DEFAULT_DURATION : String = "00:00:00"
 
+    var _songDurationSec : Int = 0
     var _songDuration : String = DEFAULT_DURATION
+
+    var _songCurrentPositionSec : Int = 0
     var _songCurrentPosition : String = DEFAULT_DURATION
 
     var _song : MusicFinder.Song = MusicFinder.Song(0, null, null, null,0, 0)
+
+    var songDurationSec : Int
+        @Bindable get() = _songDurationSec
+        set(value) {
+            _songDurationSec = value
+            notifyPropertyChanged(BR._all)
+        }
 
     var songDuration : String
         @Bindable get() = _songDuration
         set(value) {
             _songDuration = value
+            notifyPropertyChanged(BR._all)
+        }
+
+    var songCurrentPositionSec : Int
+        @Bindable get() = _songCurrentPositionSec
+        set(value) {
+            _songCurrentPositionSec = value
             notifyPropertyChanged(BR._all)
         }
 
@@ -70,17 +87,27 @@ class Player(var mediaPlayer: MediaPlayer) : BaseObservable() {
 
         var a = Date(durationMilliSec)
         songDuration = "${String.format("%02d",a.hours)}:${String.format("%02d",a.minutes)}:${String.format("%02d",a.seconds)}"
+        songDurationSec = (song.duration / 1000).toInt()
     }
 
-    fun setSongCurrentPosition(){
-        val durationMilliSec = mediaPlayer.currentPosition.toLong()
-        if(durationMilliSec <= 0)
+    fun setSongCurrentPosition(currentPosToGoTo : Int = -1){
+        val currentPositionMilliSec = if(currentPosToGoTo == -1)
+            mediaPlayer.currentPosition.toLong() else
+            (currentPosToGoTo * 1000).toLong()
+
+        if(currentPositionMilliSec <= 0)
         {
             songCurrentPosition = DEFAULT_DURATION
+            songCurrentPositionSec = 0
         }
 
-        var a = Date(durationMilliSec)
+        if(currentPosToGoTo != -1){
+            mediaPlayer.seekTo(currentPosToGoTo * 1000)
+        }
+
+        var a = Date(currentPositionMilliSec)
         songCurrentPosition = "${String.format("%02d",a.hours)}:${String.format("%02d",a.minutes)}:${String.format("%02d",a.seconds)}"
+        songCurrentPositionSec = mediaPlayer.currentPosition / 1000
 
         Timer().schedule(1000){
             setSongCurrentPosition()

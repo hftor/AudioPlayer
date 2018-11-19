@@ -142,9 +142,9 @@ class PlayerActivity : AppCompatActivity() {
             }
 
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-
-                seekFrontTime.text = progress.toString()
-                //seekBackTime.text = vm.player.songDuration.toString()
+                if(fromUser){
+                    vm.player.setSongCurrentPosition(progress)
+                }
             }
 
         })
