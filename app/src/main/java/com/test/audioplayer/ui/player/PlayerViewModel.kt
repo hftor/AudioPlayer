@@ -16,9 +16,6 @@ class PlayerViewModel(private val playerRepository: PlayerRepository) : ViewMode
     private val CURRENT_SONG : String = "current_song_name1"
     private val SONG_POSITION : String = "song_position1"
 
-    var songCurrentIndex : Int = 0
-    var songMaxIndex : Int = 0
-
 
     var player : Player = Player(MediaPlayer())
 
@@ -43,21 +40,11 @@ class PlayerViewModel(private val playerRepository: PlayerRepository) : ViewMode
     }
 
     fun playPrevious(ctx: Context){
-        if(songCurrentIndex <= 0){
-            return
-        }
-
-        player.song = player.songs[--songCurrentIndex]
-        play(ctx,true)
+        player.playPrevious(ctx)
     }
 
     fun playNext(ctx: Context){
-        if(songCurrentIndex >= songMaxIndex){
-            return
-        }
-
-        player.song = player.songs[++songCurrentIndex]
-        play(ctx,true)
+        player.playNext(ctx)
     }
 
     fun getLastPlayedSong(activity: Activity) : MusicFinder.Song{
@@ -65,7 +52,7 @@ class PlayerViewModel(private val playerRepository: PlayerRepository) : ViewMode
 
         player.songs.forEach {
             s -> if(s.title == songTitle){
-            songCurrentIndex = player.songs.indexOf(s)
+            player.songCurrentIndex = player.songs.indexOf(s)
             return s
             }
         }

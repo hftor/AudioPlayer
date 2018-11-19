@@ -54,7 +54,7 @@ class PlayerActivity : AppCompatActivity() {
         }
 
         vm.player.song = vm.getLastPlayedSong(this)
-        vm.songMaxIndex = vm.player.songs.count() - 1
+        vm.player.songMaxIndex = vm.player.songs.count() - 1
 
         vm.player.mediaPlayer.reset()
         vm.player.mediaPlayer = MediaPlayer.create(ctx,vm.player.song.uri)

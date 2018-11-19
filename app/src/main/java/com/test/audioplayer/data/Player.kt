@@ -23,6 +23,9 @@ class Player(var mediaPlayer: MediaPlayer) : BaseObservable() {
     var _songCurrentPositionSec : Int = 0
     var _songCurrentPosition : String = DEFAULT_DURATION
 
+    var songCurrentIndex : Int = 0
+    var songMaxIndex : Int = 0
+
     var _song : MusicFinder.Song = MusicFinder.Song(0, null, null, null,0, 0)
 
     var songDurationSec : Int
@@ -71,6 +74,24 @@ class Player(var mediaPlayer: MediaPlayer) : BaseObservable() {
         }
 
         mediaPlayer.start()
+    }
+
+    fun playNext(ctx: Context){
+        if(songCurrentIndex >= songMaxIndex){
+            return
+        }
+
+        song = songs[++songCurrentIndex]
+        play(ctx,true)
+    }
+
+    fun playPrevious(ctx: Context){
+        if(songCurrentIndex <= 0){
+            return
+        }
+
+        song = songs[--songCurrentIndex]
+        play(ctx,true)
     }
 
     fun goToSongsSavedPosition(songPos: Int){
