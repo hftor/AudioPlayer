@@ -16,7 +16,6 @@ import android.databinding.DataBindingUtil
 import android.net.Uri
 import android.widget.ImageView
 import android.widget.SeekBar
-import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.test.audioplayer.databinding.ActivityPlayerBinding
 

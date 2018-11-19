@@ -2,31 +2,17 @@ package com.test.audioplayer
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.graphics.Color
-import android.graphics.Typeface
-import android.media.MediaPlayer
+
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.ActivityCompat
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
-import com.mtechviral.mplaylib.MusicFinder
 
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.experimental.launch
 import org.jetbrains.anko.*
-import org.jetbrains.anko.custom.async
-import org.jetbrains.anko.sdk25.coroutines.onClick
-import java.io.File
-import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
